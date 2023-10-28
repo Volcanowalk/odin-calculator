@@ -26,7 +26,95 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //calculate
     btnCalc.addEventListener("click", () => {
-        upperDisplay.textContent = `${upperDisplay.textContent} ${lowerDisplay.textContent}`
+        calculate(upperDisplay, lowerDisplay)
+    })
+
+    //Display clicked numbers on the lower display
+    btnNums.forEach((btnNum) => {
+        btnNum.addEventListener("click", () => {
+            const num = btnNum.textContent;
+            if(lowerDisplay.textContent === "0"){
+                lowerDisplay.textContent = num;
+            } else {
+                lowerDisplay.textContent = lowerDisplay.textContent + num;
+            }
+        });
+    });
+
+    //Delete the end character when 'DEL' button is clicked
+    btnDel.addEventListener("click", () => {
+        lowerDisplay.textContent = lowerDisplay.textContent.slice(0, -1);
+        //If '-' sign is the only char left, delete it
+        if(lowerDisplay.textContent.length = 1 && lowerDisplay.textContent === "-") {
+            lowerDisplay.textContent = "";
+        }
+
+        //If the last character is 'decimal' point, delete it
+        if(lowerDisplay.textContent.charAt(lowerDisplay.textContent.length - 1) === "."){
+            console.log("true");
+            lowerDisplay.textContent = lowerDisplay.textContent.slice(0, -1);
+        }
+    })
+
+    //Toggle between negative sign and positive sign
+    btnNegPos.addEventListener("click", () => {
+        if (lowerDisplay.textContent.charAt(0) === "-"){
+            lowerDisplay.textContent = lowerDisplay.textContent.slice(1, lowerDisplay.textContent.length)
+        } else if (lowerDisplay.textContent.charAt(0) != "0") {
+            lowerDisplay.textContent = "-" + lowerDisplay.textContent
+        }
+    })
+
+    //All Clear button
+    btnAC.addEventListener("click", () => {
+        lowerDisplay.textContent = "";
+        upperDisplay.textContent = "";
+    })
+
+    //Add decimal
+    btnDecimal.addEventListener("click", () => {
+        lowerDisplay.textContent = lowerDisplay.textContent + "."
+    })
+
+    //Keyboard press event listener
+    document.addEventListener('keypress', (event) => {
+        if (!isNaN(parseInt(event.key))) {
+            if(lowerDisplay.textContent === "0"){
+                lowerDisplay.textContent = event.key;
+            } else {
+                lowerDisplay.textContent = lowerDisplay.textContent + event.key;
+            }
+        } else if (event.key === "/" || event.key === "*" || event.key === "-" || event.key === "+") {
+
+            let sign;
+
+            if(event.key === "/") {
+                sign = '\u00F7';
+            } else if (event.key === "*") {
+                sign = '\u00D7';
+            } else if (event.key === "-") {
+                sign = '\u2212';
+            } else {
+                sign = '\u002B';   
+            }
+
+            if (lowerDisplay.textContent != "") {
+                if(upperDisplay.textContent.charAt(upperDisplay.textContent.length - 1) === "=") {
+                    upperDisplay.textContent = `${lowerDisplay.textContent} ${sign}`
+                } else {
+                    upperDisplay.textContent = `${upperDisplay.textContent} ${lowerDisplay.textContent} ${sign}`;
+                }
+                lowerDisplay.textContent = "";
+            }
+        } else if (event.key === "Enter" || event.key === "=") {
+            calculate(upperDisplay, lowerDisplay)
+        }
+    })
+
+});
+
+function calculate(upperDisplay, lowerDisplay) {
+    upperDisplay.textContent = `${upperDisplay.textContent} ${lowerDisplay.textContent}`
 
         let array = upperDisplay.textContent.trim().split(" ");
         let result, oper = "";
@@ -65,53 +153,4 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         upperDisplay.textContent = `${upperDisplay.textContent} =`
         lowerDisplay.textContent = `${result}`
-    })
-
-    //Display clicked numbers on the lower display
-    btnNums.forEach((btnNum) => {
-        btnNum.addEventListener("click", () => {
-            const num = btnNum.textContent;
-            if(lowerDisplay.textContent === "0"){
-                lowerDisplay.textContent = num;
-            } else {
-                lowerDisplay.textContent = lowerDisplay.textContent + num;
-            }
-        });
-    });
-
-    //Delete the end character when 'DEL' button is clicked
-    btnDel.addEventListener("click", () => {
-        lowerDisplay.textContent = lowerDisplay.textContent.slice(0, -1);
-        //If '-' sign is the only char left, delete it
-        if(lowerDisplay.textContent.length = 1 && lowerDisplay.textContent === "-") {
-            lowerDisplay.textContent = "";
-        }
-
-        //If the last character is 'decimal' point, delete it
-        if(lowerDisplay.textContent.charAt(lowerDisplay.textContent.length - 1) === "."){
-            console.log("true");
-            lowerDisplay.textContent = lowerDisplay.textContent.slice(0, -1);
-        }
-    })
-
-    //Toggle between negative sign and positive sign
-    btnNegPos.addEventListener("click", () => {
-        if (lowerDisplay.textContent.charAt(0) === "-"){
-            lowerDisplay.textContent = lowerDisplay.textContent.slice(1, lowerDisplay.textContent.length)
-        } else {
-            lowerDisplay.textContent = "-" + lowerDisplay.textContent
-        }
-    })
-
-    //All Clear button
-    btnAC.addEventListener("click", () => {
-        lowerDisplay.textContent = "";
-        upperDisplay.textContent = "";
-    })
-
-    //Add decimal
-    btnDecimal.addEventListener("click", () => {
-        lowerDisplay.textContent = lowerDisplay.textContent + "."
-    })
-
-});
+}

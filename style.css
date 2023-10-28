@@ -88,6 +88,10 @@ h1 {
     color: white;
 }
 
+.allClear {
+    background-color: #DE9A96;
+}
+
 .displays {
     display: flex;
     flex-direction: column;
