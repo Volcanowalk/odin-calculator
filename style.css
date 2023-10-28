@@ -1,0 +1,95 @@
+.container-calc {
+    border-style: solid;
+    border-width: 1px;
+    width: 500px;
+    height: 500px;
+    background-color: #7399B2;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #1B4965;
+}
+
+h1 {
+    color: white;
+}
+
+.keypad {
+    display: flex;
+}
+
+.displays {
+    border-style: solid;
+    height: 100px;
+}
+.numpad {
+    height: 390px;
+    width: 350px;
+}
+.operations > div {
+    border-style: solid;
+    width: 100px;
+    height: 50px;
+    font-size: 39px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.operations {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 130px;
+    gap: 15px;
+    background-color: #CAE9FF;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+}
+
+.row > div {
+    border-style: solid;
+    width: 100px;
+    height: 50px;
+    border-radius: 8px;
+    font-size: 39px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.numpad {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 380px;
+    background-color: #62B6CB;
+}
+
+.row > div:hover, .operations > div:hover {
+    background-color: #3F8098;
+    color: white;
+}
+
+.displays {
+    display: flex;
+    flex-direction: column;
+}
+
+.upper-display, .lower-display {
+    font-size: 38px;
+    height: 50px;
+    width: 480px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
