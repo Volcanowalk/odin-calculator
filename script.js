@@ -7,12 +7,75 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnNegPos = document.querySelector(".toggleNegPos")
     const btnAC = document.querySelector(".allClear")
     const btnDecimal = document.querySelector(".decimal")
+    const btnOperations = document.querySelectorAll(".operation")
+    const btnCalc = document.querySelector(".calculate")
+
+    //operations
+    btnOperations.forEach((btnOperation) => {
+        btnOperation.addEventListener("click", () => {
+            if (lowerDisplay.textContent != "") {
+                if(upperDisplay.textContent.charAt(upperDisplay.textContent.length - 1) === "=") {
+                    upperDisplay.textContent = `${lowerDisplay.textContent} ${btnOperation.textContent}`
+                } else {
+                    upperDisplay.textContent = `${upperDisplay.textContent} ${lowerDisplay.textContent} ${btnOperation.textContent}`;
+                }
+                lowerDisplay.textContent = "";
+            }
+        })
+    })
+
+    //calculate
+    btnCalc.addEventListener("click", () => {
+        upperDisplay.textContent = `${upperDisplay.textContent} ${lowerDisplay.textContent}`
+
+        let array = upperDisplay.textContent.trim().split(" ");
+        let result, oper = "";
+        
+        for(let i = 0; i < array.length; i++) {
+            if (result == null){
+                result = parseFloat(array[i])
+            } else {
+                if(array[i] === '\u002B'){ //Plus
+                    oper = "plus"
+                } else if (array[i] === '\u2212') { //Minus
+                    oper = "minus"
+                } else if (array[i] === '\u00D7') { //multiply
+                    oper = "multiply"
+                } else if (array[i] === '\u00F7') { //divide
+                    oper = "divide"
+                } else if (array[i] === '%') { //remainder
+                    oper = "remainder"
+                } else { //Numbers except the first number
+                    num = parseFloat(array[i])
+
+                    //calculate
+                    if(oper === "plus") {
+                        result = result + num
+                    } else if(oper === "minus") {
+                        result = result - num
+                    } else if(oper === "multiply") {
+                        result = result * num
+                    } else if(oper === "divide") {
+                        result = Math.round((result / num) * 10000) / 10000
+                    } else { //remainder
+                        result = result % num
+                    }
+                }
+            }
+        }
+        upperDisplay.textContent = `${upperDisplay.textContent} =`
+        lowerDisplay.textContent = `${result}`
+    })
 
     //Display clicked numbers on the lower display
     btnNums.forEach((btnNum) => {
         btnNum.addEventListener("click", () => {
             const num = btnNum.textContent;
-            lowerDisplay.textContent = lowerDisplay.textContent + num;
+            if(lowerDisplay.textContent === "0"){
+                lowerDisplay.textContent = num;
+            } else {
+                lowerDisplay.textContent = lowerDisplay.textContent + num;
+            }
         });
     });
 
