@@ -1,9 +1,10 @@
 .container-calc {
-    border-style: solid;
-    border-width: 1px;
+    border: 3px solid orange;
+    border-radius: 8px;
     width: 500px;
     height: 500px;
     background-color: #7399B2;
+    box-shadow: 0px 0px 10px #62B6CB;
 }
 body {
     min-height: 100vh;
@@ -29,10 +30,10 @@ h1 {
 
 .displays {
     height: 100px;
-    border-bottom: solid;
+    border-bottom: 3px solid orange;
 }
 .numpad {
-    height: 400px;
+    height: 397px;
     width: 350px;
 }
 .operations > div {
