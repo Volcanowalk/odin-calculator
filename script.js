@@ -73,7 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Add decimal
     btnDecimal.addEventListener("click", () => {
-        lowerDisplay.textContent = lowerDisplay.textContent + "."
+        if(!lowerDisplay.textContent.includes('.')) {
+            lowerDisplay.textContent =      lowerDisplay.textContent + "."
+        }
     })
 
     //Keyboard press event listener
@@ -116,8 +118,10 @@ document.addEventListener("DOMContentLoaded", () => {
 function calculate(upperDisplay, lowerDisplay) {
     upperDisplay.textContent = `${upperDisplay.textContent} ${lowerDisplay.textContent}`
 
-        let array = upperDisplay.textContent.trim().split(" ");
-        let result, oper = "";
+    console.log(upperDisplay.textContent)
+
+    let array = upperDisplay.textContent.trim().split(" ");
+    let result, oper = "";
         
         for(let i = 0; i < array.length; i++) {
             if (result == null){
@@ -133,6 +137,8 @@ function calculate(upperDisplay, lowerDisplay) {
                     oper = "divide"
                 } else if (array[i] === '%') { //remainder
                     oper = "remainder"
+                } else if (array[i] === '=') {
+                    oper = "equals"
                 } else { //Numbers except the first number
                     num = parseFloat(array[i])
 
@@ -145,7 +151,9 @@ function calculate(upperDisplay, lowerDisplay) {
                         result = result * num
                     } else if(oper === "divide") {
                         result = Math.round((result / num) * 10000) / 10000
-                    } else { //remainder
+                    } else if(oper === "equals") {
+                        upperDisplay.textContent = `${result}`
+                    }else { //remainder
                         result = result % num
                     }
                 }
